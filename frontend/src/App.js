@@ -4,7 +4,7 @@ import Header from "./components/Header";
 import TaskList from "./components/TaskList";
 import AddTask from "./components/AddTask";
 import Register from "./pages/Register";
-import Login from "./pages/Login"; // Corrected import path to match the actual file name
+import Login from "./pages/Login";
 
 const App = () => {
   const [tasks, setTasks] = useState([]);
@@ -58,12 +58,6 @@ const App = () => {
     });
 
     const data = await res.json();
-
-    setTasks(
-      tasks.map((task) =>
-        task.id === id ? { ...task, reminder: data.reminder } : task
-      )
-    );
   };
 
   const fetchTask = async (id) => {
@@ -77,16 +71,12 @@ const App = () => {
       <div className="container">
         <Header />
         <Switch>
-          <Route path="/" exact>
-            <AddTask onAdd={addTask} />
-            <TaskList
-              tasks={tasks}
-              onDelete={deleteTask}
-              onToggle={toggleReminder}
-            />
-          </Route>
           <Route path="/register" component={Register} />
           <Route path="/login" component={Login} />
+          <Route path="/dashboard">
+            <TaskList tasks={tasks} onDelete={deleteTask} onToggle={toggleReminder} />
+            <AddTask onAdd={addTask} />
+          </Route>
         </Switch>
       </div>
     </Router>
