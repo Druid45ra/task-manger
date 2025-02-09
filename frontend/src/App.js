@@ -4,7 +4,7 @@ import Header from "./components/Header";
 import TaskList from "./components/TaskList";
 import AddTask from "./components/AddTask";
 import Register from "./pages/Register";
-import Login from "./pages/login"; // Corrected import path to match the actual file name
+import Login from "./pages/Login"; // Corrected import path to match the actual file name
 
 const App = () => {
   const [tasks, setTasks] = useState([]);
