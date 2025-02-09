@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 
 // Register user
-exports.register = async (req, res) => {
+exports.registerUser = async (req, res) => {
   const { name, email, password } = req.body;
   try {
     let user = await User.findOne({ email });
@@ -24,7 +24,7 @@ exports.register = async (req, res) => {
 };
 
 // Login user
-exports.login = async (req, res) => {
+exports.loginUser = async (req, res) => {
   const { email, password } = req.body;
   try {
     const user = await User.findOne({ email });
@@ -39,6 +39,16 @@ exports.login = async (req, res) => {
     });
 
     res.json({ token });
+  } catch (err) {
+    res.status(500).json({ msg: "Server error" });
+  }
+};
+
+// Get user profile
+exports.getUserProfile = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.userId).select("-password");
+    res.json(user);
   } catch (err) {
     res.status(500).json({ msg: "Server error" });
   }
